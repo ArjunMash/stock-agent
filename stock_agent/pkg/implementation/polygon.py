@@ -1,9 +1,22 @@
 from stock_agent.pkg.types.base_agent import BaseStockAgent
+from polygon import RESTClient
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+PolygonKey = os.environ.get("PolygonKey")
+client = RESTClient(PolygonKey)
 
 
 class PolygonTools(BaseStockAgent):
-    def get_current_price(self, ticker_name: str) -> float:
-       return 12.0
+    # Get ticker's recent day end results
+    def get_ticker_price(self, ticker_name: str) -> float:
+        aggs = client.get_previous_close_agg(
+            ticker_name,
+            adjusted="true",
+        )
+        return(aggs)    
 
-    def get_today_close_open_price(self, ticker_name: str) -> float:
-        return 6.0
+    # Get Ticker description
+    def get_ticker_desc(self, ticker_name: str) -> float:
+        return "return that you've successfully called get today close open price"

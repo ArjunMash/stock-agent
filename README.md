@@ -1,2 +1,2 @@
 # stock-agent
-Agent using OpenAI API and Polygon. Highlighting OOP &amp; Version Control
+Chatbot Agent with real time stock market data using OpenAI and Polygon APIs. Also, will try to demonstrate command of OOP and git 

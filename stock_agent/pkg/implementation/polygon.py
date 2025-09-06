@@ -9,7 +9,7 @@ client = RESTClient(PolygonKey)
 
 
 class PolygonTools(BaseStockAgent):
-    # Get ticker's recent day end results
+    # Get ticker's recent day end results (can only do day close due to free API)
     def get_ticker_price(self, ticker_name: str) -> float:
         aggs = client.get_previous_close_agg(
             ticker_name,
@@ -21,4 +21,3 @@ class PolygonTools(BaseStockAgent):
     def get_ticker_desc(self, ticker_name: str) -> float:
         details = client.get_ticker_details(ticker_name)
         return(details)
-        return "return that you've successfully called get today close open price"

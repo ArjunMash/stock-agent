@@ -19,4 +19,6 @@ class PolygonTools(BaseStockAgent):
 
     # Get Ticker description
     def get_ticker_desc(self, ticker_name: str) -> float:
+        details = client.get_ticker_details(ticker_name)
+        return(details)
         return "return that you've successfully called get today close open price"

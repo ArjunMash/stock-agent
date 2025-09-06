@@ -11,12 +11,13 @@ if __name__ == "__main__":
     # 1.) create infinite loop till the user exits
     # 2.) for each iteration take the users question from the cmd line
     # 3.) take that question and run it through your LLM -> call a tool if needed -> tool function will call the API -> return to the llm and the LLM would take the question of the user and the data from the API and answer the question
+    print()
+    print("Welcome to Arjun's stock companion. Asks a question to get an intelligent response based on real time data!\n")
+    print("You can quit or close the program by typing '//Q' ")
     
-    userquery = "Get the recent price of AAPL"
-    print(agent.run(userquery))
-
-    userquery = "What is NVDAs last day look like?"
-    print(agent.run(userquery))
-
-    userquery = "Get a stock description of MongoDB"
-    print(agent.run(userquery))
+    while True:
+        userquery = input()   
+        if (userquery.lower() == "//q"):
+            break            
+        else:
+            print(agent.run(userquery))

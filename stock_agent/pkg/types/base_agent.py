@@ -28,15 +28,11 @@ class BaseStockAgent(ABC):
         self.llm = init_chat_model(model_llm_name, model_provider= llm_company_name)
         self.llm_with_tools = self.llm.bind_tools(tools)
     
-    def run(self, user_query: str) -> str:        
-        # System prompt   
-        messages = [
-            SystemMessage(content="You are a helpful stock assistant. Use tools when needed."),
-            HumanMessage(content=user_query),
-        ] 
-
+    def run(self, messages: list) -> list:        
+      
+        # messages = self.messages
         ai_msg = self.llm_with_tools.invoke(messages)
-        
+       
         # Loop through tool calls and pass requests to Polygon
         messages.append(ai_msg)
         for tool_call in ai_msg.tool_calls:
@@ -44,13 +40,13 @@ class BaseStockAgent(ABC):
             args = tool_call["args"]
             tool_output = selected_tool(**args)
             tool_output = str(tool_output)            
-            messages.append(ToolMessage(tool_output, tool_call_id=tool_call["id"]))
-        messages 
+            messages.append(ToolMessage(tool_output, tool_call_id=tool_call["id"])) 
 
         # Finally return LLMs final formatted response
-        return self.llm_with_tools.invoke(messages).content.strip()           
+        messages.append(self.llm_with_tools.invoke(messages))
+        return messages
 
-    # Abstract methods outlining requirments for tool calls implementations need to have    
+    # Abstract methods outlining requirements for tool call implementations 
     @abstractmethod
     def get_ticker_price(self, ticker_name: str) -> str:
         pass

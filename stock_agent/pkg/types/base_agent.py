@@ -21,9 +21,20 @@ class BaseStockAgent(ABC):
         @tool
         def get_ticker_desc(ticker_name: str) -> str:
             """Return an overview of information about a company as a JSON string."""
-            return self.get_ticker_desc(ticker_name)             
+            return self.get_ticker_desc(ticker_name) 
+        
+        @tool
+        def get_ticker_fundamentals(self, ticker_name: str)  -> list:
+            """Return a list containing key financial data like cash flows and balance sheet information 
+            derived from the company's SEC filings"""          
+            return self.get_ticker_fundamentals(ticker_name)
+        
+        @tool
+        def get_ticker_historic_performance(self, ticker_name: str) 
+            """Returns OHLC data for a ticker in the provided time window as well as outputting a candlestick 
+            chart for the user"""
 
-        tools = [get_ticker_price,get_ticker_desc]
+        tools = [get_ticker_price,get_ticker_desc, get_ticker_fundamentals, get_ticker_historic_performance]
 
         self.llm = init_chat_model(model_llm_name, model_provider= llm_company_name)
         self.llm_with_tools = self.llm.bind_tools(tools)
@@ -53,4 +64,8 @@ class BaseStockAgent(ABC):
 
     @abstractmethod
     def get_ticker_desc(self, ticker_name: str) -> str:
+        pass
+    
+    @abstractmethod
+    def get_ticker_fundamentals(self, ticker_name: str)  -> list:
         pass
